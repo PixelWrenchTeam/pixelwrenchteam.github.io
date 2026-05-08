@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Syne:wght@700;800&display=swap');
+
+:root {
+    --bg-main: #06060c;
+    --bg-surface: #121220;
+    --accent-primary: #7000ff;
+    --accent-secondary: #9d00ff;
+    --accent-glow: rgba(112, 0, 255, 0.4);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0c5;
+    --line-color: #2a2a3e;
+    --nav-width: 80px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    display: flex;
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(112, 0, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(157, 0, 255, 0.05) 0%, transparent 40%);
+}
+
+.side-nav {
+    width: var(--nav-width);
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: var(--bg-surface);
+    border-right: 1px solid var(--line-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0;
+    z-index: 1000;
+}
+
+.nav-logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 10px var(--accent-glow));
+}
+
+.nav-logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--accent-primary);
+    writing-mode: vertical-rl;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.2em;
+    transform: rotate(180deg);
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    list-style: none;
+}
+
+.nav-menu a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    transition: all 0.3s;
+    letter-spacing: 0.1em;
+}
+
+.nav-menu a:hover {
+    color: var(--accent-primary);
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+main {
+    margin-left: var(--nav-width);
+    width: calc(100% - var(--nav-width));
+    padding-bottom: 5rem;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+}
+
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 10rem 0;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(112, 0, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(112, 0, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -1;
+}
+
+.hero-text h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 8rem;
+    line-height: 0.85;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    position: relative;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+}
+
+.hero-text h1 span {
+    color: var(--text-primary);
+    -webkit-text-stroke: 0;
+    text-shadow: 0 0 30px rgba(112, 0, 255, 0.4);
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin-bottom: 4rem;
+    line-height: 1.8;
+}
+
+.hero-image {
+    width: 100%;
+    height: 600px;
+    background: #08080c;
+    border-left: 2px solid var(--accent-primary);
+    position: relative;
+    overflow: hidden;
+    box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
+}
+
+.hero-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(112, 0, 255, 0.05));
+}
+
+.cta-group {
+    display: flex;
+    gap: 2rem;
+}
+
+.btn-forge {
+    padding: 1.5rem 3rem;
+    background: var(--accent-primary);
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn-forge:hover {
+    background: var(--accent-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px var(--accent-glow);
+}
+
+.btn-ghost {
+    padding: 1.5rem 3rem;
+    border: 1px solid var(--line-color);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-primary);
+}
+
+.features-layout {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+}
+
+.feature-block {
+    grid-column: span 6;
+    padding: 4rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--line-color);
+    position: relative;
+    transition: all 0.4s;
+}
+
+.feature-block:hover {
+    border-color: var(--accent-primary);
+    transform: scale(1.02);
+}
+
+.feature-block.wide {
+    grid-column: span 12;
+}
+
+.feature-block .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 4rem;
+    color: rgba(112, 0, 255, 0.15);
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+}
+
+.feature-block h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    color: var(--accent-primary);
+}
+
+.feature-block p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    max-width: 450px;
+}
+
+.demo-wrap {
+    width: 100%;
+    background: #040408;
+    border: 1px solid var(--line-color);
+    padding: 2rem;
+    position: relative;
+}
+
+.demo-frame {
+    aspect-ratio: 16/9;
+    background: #020205;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-primary);
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    border: 1px dashed rgba(112, 0, 255, 0.2);
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+.team-layout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line-color);
+}
+
+.team-member {
+    background: var(--bg-main);
+    padding: 4rem 2rem;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.team-member:hover {
+    background: var(--bg-surface);
+}
+
+.team-member h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.team-member p {
+    color: var(--accent-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+}
+
+footer {
+    padding: 8rem 0;
+    border-top: 1px solid var(--line-color);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+}
+
+.social-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.social-list a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.social-list a:hover {
+    color: var(--accent-primary);
+    padding-left: 10px;
+}
+
+@media (max-width: 1024px) {
+    .side-nav {
+        display: none;
+    }
+
+    main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .container {
+        padding: 0 2rem;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding-top: 4rem;
+    }
+
+    .hero-text h1 {
+        font-size: 4rem;
+    }
+
+    .feature-block {
+        grid-column: span 12;
+    }
+
+    .team-layout {
+        grid-template-columns: 1fr;
+    }
+}
