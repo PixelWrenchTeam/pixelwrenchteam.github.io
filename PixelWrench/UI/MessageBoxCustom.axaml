@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="PixelWrench.MessageBoxCustom"
+        Title="Message"
+        SizeToContent="WidthAndHeight"
+        MaxWidth="600" MaxHeight="700" MinWidth="300"
+        WindowStartupLocation="CenterOwner"
+        Background="Transparent" TransparencyLevelHint="Transparent" CanResize="False"
+        ExtendClientAreaToDecorationsHint="True" ExtendClientAreaChromeHints="NoChrome" ExtendClientAreaTitleBarHeightHint="-1">
+    
+    <Border Background="#1d1829" BorderBrush="#413659" BorderThickness="2" CornerRadius="8" Padding="20">
+        <Grid RowDefinitions="Auto,*,Auto">
+            <TextBlock x:Name="TitleBlock" FontWeight="Bold" FontSize="16" Foreground="#a78bfa" Margin="0,0,0,15"/>
+            
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="500" Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock x:Name="MessageBlock" Foreground="#F8FAFC" FontSize="14" TextWrapping="Wrap" IsVisible="True" Margin="0,0,0,10"/>
+                    <TextBox x:Name="SelectableMessageBlock" Background="Transparent" BorderThickness="0" Foreground="#F8FAFC" FontSize="14" TextWrapping="Wrap" IsReadOnly="True" IsVisible="False"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel x:Name="ButtonsPanel" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10"/>
+        </Grid>
+    </Border>
+</Window>

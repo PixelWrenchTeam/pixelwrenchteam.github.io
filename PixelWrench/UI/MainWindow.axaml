@@ -1,0 +1,309 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="PixelWrench.MainWindow"
+        Title="PixelWrench" Height="960" Width="1280"
+        SystemDecorations="None"
+        Background="#1d1829"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        PointerMoved="Window_PointerMoved">
+
+    <Window.Resources>
+        <BoxShadows x:Key="PopupShadow">4 4 10 0 #80000000</BoxShadows>
+    </Window.Resources>
+
+    <Window.Styles>
+        <Style Selector="Button.ModernBtn">
+            <Setter Property="Background" Value="#2e2640"/>
+            <Setter Property="Foreground" Value="#F8FAFC"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,5"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Content}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="Button.ModernBtn:pointerover">
+            <Setter Property="Background" Value="#413659"/>
+        </Style>
+
+        <Style Selector="RadioButton.ChipRadio">
+            <Setter Property="Foreground" Value="#a78bfa"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="0,0,6,8"/>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Background="{TemplateBinding Background}" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Content}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="RadioButton.ChipRadio:pointerover">
+            <Setter Property="Background" Value="#2e2640"/>
+            <Setter Property="Foreground" Value="#F8FAFC"/>
+        </Style>
+        <Style Selector="RadioButton.ChipRadio:checked">
+            <Setter Property="Background" Value="#8b5cf6"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="35,*">
+        <Grid Grid.Row="0" Background="#130f1c" PointerPressed="TitleBar_PointerPressed" Panel.ZIndex="10">
+            <TextBlock Text="PIXELWRENCH" Foreground="#a78bfa" FontSize="13" FontWeight="Bold" VerticalAlignment="Center" Margin="15,0,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="—" Width="45" Background="Transparent" Foreground="#a78bfa" BorderThickness="0" Click="Minimize_Click" Focusable="False"/>
+                <Button Content="🗖" Width="45" Background="Transparent" Foreground="#a78bfa" BorderThickness="0" Click="Maximize_Click" Focusable="False"/>
+                <Button Content="✕" Width="45" Background="Transparent" Foreground="#EF4444" BorderThickness="0" Click="Close_Click" Focusable="False"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+        
+                <ScrollViewer Grid.Row="1" Margin="20,0,20,20">
+                    <WrapPanel x:Name="WorldListPanel" ItemWidth="240" ItemHeight="160" Orientation="Horizontal">
+                        <Border Background="#2e2640" CornerRadius="8" BorderBrush="#413659" BorderThickness="2" Cursor="Hand" Margin="0,0,15,15">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+                                <TextBlock Text="+" Foreground="#8b5cf6" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="New World" Foreground="#F8FAFC" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid x:Name="PlannerView" IsVisible="True" ZIndex="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#1d1829" BorderBrush="#2e2640" BorderThickness="0,0,2,0">
+                    <Grid RowDefinitions="Auto,*,140">
+                        <Grid Grid.Row="0" RowDefinitions="Auto,Auto" Margin="15,15,15,5">
+                            <Border Grid.Row="0" Background="#2e2640" CornerRadius="8" Padding="10,8">
+                                <Grid>
+                                    <TextBox x:Name="SearchBox" Background="Transparent" Foreground="#F8FAFC" BorderThickness="0" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus" TextChanged="SearchBox_TextChanged" Cursor="IBeam"/>
+                                    <TextBlock x:Name="SearchPlaceholder" Text="Search items..." Foreground="#a78bfa" IsHitTestVisible="False"/>
+                                </Grid>
+                            </Border>
+
+                            <WrapPanel Grid.Row="1" Margin="0,15,0,0">
+                                <RadioButton Content="Blocks" Classes="ChipRadio" Tag="Block" IsChecked="True" Checked="CategoryFilter_Checked"/>
+                                <RadioButton Content="Backs" Classes="ChipRadio" Tag="Background" Checked="CategoryFilter_Checked"/>
+                                <RadioButton Content="Props" Classes="ChipRadio" Tag="Prop" Checked="CategoryFilter_Checked"/>
+                                <RadioButton Content="Graffiti" Classes="ChipRadio" Tag="Graffiti" Checked="CategoryFilter_Checked"/>
+                                <RadioButton Content="Fossils" Classes="ChipRadio" Tag="Fossil" Checked="CategoryFilter_Checked"/>
+                                <RadioButton Content="World" Classes="ChipRadio" Tag="WorldBackground" Checked="CategoryFilter_Checked"/>
+                            </WrapPanel>
+                        </Grid>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Focusable="False" Margin="0,0,0,10" PointerPressed="Library_PointerPressed">
+                            <WrapPanel x:Name="LibraryPanel" Margin="15,0,10,10"/>
+                        </ScrollViewer>
+
+                        <Border x:Name="VariantsContainer" Grid.Row="2" Background="#130f1c" BorderBrush="#2e2640" BorderThickness="0,2,0,0" IsVisible="False">
+                            <StackPanel Margin="15,10">
+                                <TextBlock Text="VARIANTS" Foreground="#a78bfa" FontSize="11" FontWeight="Bold" Margin="0,0,0,10"/>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                    <WrapPanel x:Name="VariantsPanel" ItemWidth="50" ItemHeight="50" Orientation="Horizontal"/>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Column="1" Background="#1d1829" RowDefinitions="Auto,*">
+                    <Border Grid.Row="0" Background="#1d1829" BorderBrush="#2e2640" BorderThickness="0,0,0,2">
+                        <WrapPanel VerticalAlignment="Center" Margin="10,5">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,15,5">
+                                    <TextBlock Text="←" FontSize="16" FontWeight="Bold" Margin="0,-4,0,0"/>
+                                <Button x:Name="BtnToggleLib" Classes="ModernBtn" Margin="0,0,15,0" Click="ToggleLibrary_Click" ToolTip.Tip="Toggle Library">
+                                    <Image x:Name="IconLib" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnFolder" Classes="ModernBtn" Margin="0,0,0,0" Click="Folder_Click" ToolTip.Tip="Open Data Folder" IsEnabled="False" Opacity="0.5">
+                                    <Image x:Name="IconFolder" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,15,5">
+                                <Button x:Name="BtnUndo" Classes="ModernBtn" Margin="0,0,8,0" Click="Undo_Click" ToolTip.Tip="Undo (Ctrl+Z)">
+                                    <Image x:Name="IconUndo" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnRedo" Classes="ModernBtn" Margin="0,0,8,0" Click="Redo_Click" ToolTip.Tip="Redo (Ctrl+Y)">
+                                    <Image x:Name="IconRedo" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnGrid" Classes="ModernBtn" Margin="0,0,0,0" Click="GridToggle_Click" PointerPressed="GridToggle_PointerPressed" ToolTip.Tip="Toggle Grid (Tab) | Right-Click for Size">
+                                    <Image x:Name="IconGrid" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,15,5">
+                                <Button x:Name="BtnBrush" Classes="ModernBtn" Tag="brush" Click="Tool_Click" PointerPressed="Tool_PointerPressed" ToolTip.Tip="Brush (B)">
+                                    <Image x:Name="IconBrush" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnErase" Classes="ModernBtn" Tag="erase" Click="Tool_Click" PointerPressed="Tool_PointerPressed" ToolTip.Tip="Eraser (E)">
+                                    <Image x:Name="IconErase" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnFill" Classes="ModernBtn" Margin="0,0,8,0" Click="Tool_Click" Tag="fill" ToolTip.Tip="Fill (G)">
+                                    <Image x:Name="IconFill" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnPick" Classes="ModernBtn" Margin="0,0,8,0" Click="Tool_Click" Tag="pick" ToolTip.Tip="Eyedropper (I)">
+                                    <Image x:Name="IconPick" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnBox" Classes="ModernBtn" Margin="0,0,8,0" Click="BtnBox_Click" PointerPressed="Tool_PointerPressed" Tag="box" ToolTip.Tip="Select Area (R)" IsEnabled="False" Opacity="0.5">
+                                    <Image x:Name="BtnBoxIcon" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnLine" Classes="ModernBtn" Margin="0,0,8,0" Click="Tool_Click" Tag="line" ToolTip.Tip="Line Tool" IsEnabled="False" Opacity="0.5">
+                                    <Image x:Name="IconLine" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnMirrorV" Classes="ModernBtn" Margin="0,0,8,0" Click="Tool_Click" Tag="mirror_v" ToolTip.Tip="Vertical Mirror (Disabled)" IsEnabled="False" Opacity="0.5">
+                                    <Image x:Name="IconMirrorV" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnMirrorH" Classes="ModernBtn" Margin="0,0,8,0" Click="Tool_Click" Tag="mirror_h" ToolTip.Tip="Horizontal Mirror (Disabled)" IsEnabled="False" Opacity="0.5">
+                                    <Image x:Name="IconMirrorH" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnStencil" Classes="ModernBtn" Margin="0,0,0,0" Click="Tool_Click" Tag="stencil" ToolTip.Tip="Mirror Stencil (Disabled)" IsEnabled="False" Opacity="0.5">
+                                    <Image x:Name="IconStencil" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,15,5">
+                                <Button x:Name="BtnClear" Classes="ModernBtn" Margin="0,0,8,0" Click="Clear_Click" Background="#EF4444" ToolTip.Tip="Clear Canvas (N)">
+                                    <Image x:Name="IconClear" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnSave" Classes="ModernBtn" Margin="0,0,8,0" Click="Save_Click" Background="#10B981" ToolTip.Tip="Save World">
+                                    <Image x:Name="IconSave" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnLoad" Classes="ModernBtn" Margin="0,0,8,0" Click="Load_Click" ToolTip.Tip="Load World">
+                                    <Image x:Name="IconLoad" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnExport" Classes="ModernBtn" Margin="0,0,0,0" Click="Export_Click" ToolTip.Tip="Screenshot (S)">
+                                    <Image x:Name="IconExport" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,15,5">
+                                <Button x:Name="BtnStats" Classes="ModernBtn" Margin="0,0,8,0" Click="Stats_Click" ToolTip.Tip="Statistics">
+                                    <Image x:Name="IconStats" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnBug" Classes="ModernBtn" Margin="0,0,8,0" Click="Bug_Click" ToolTip.Tip="Join Discord">
+                                    <Image x:Name="IconBug" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnInfo" Classes="ModernBtn" Margin="0,0,8,0" Click="Info_Click" ToolTip.Tip="Shortcuts &amp; Info">
+                                    <Image x:Name="IconInfo" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                                <Button x:Name="BtnKofi" Classes="ModernBtn" Margin="0,0,0,0" Click="Kofi_Click" ToolTip.Tip="Support the Project">
+                                    <Image x:Name="IconKofi" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,5">
+                                <Image x:Name="IconLocation" Width="16" Height="16" Margin="0,0,5,0" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                <TextBlock x:Name="StatusCoords" Width="80" Text="X: - | Y: -" Foreground="#a78bfa" FontSize="12" FontWeight="SemiBold" Margin="0,0,15,0" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="StatusZoom" Width="80" Text="Zoom: 100%" Foreground="#a78bfa" FontSize="12" FontWeight="SemiBold" Margin="0,0,15,0" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="StatusItem" Text="Selected: none" Foreground="#F8FAFC" FontSize="12" FontWeight="Bold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </WrapPanel>
+                    </Border>
+
+                    <Canvas x:Name="ViewportCanvas" Grid.Row="1" Background="#130f1c" ClipToBounds="True" Focusable="True" Cursor="Cross"
+                            PointerEntered="Viewport_PointerEntered" PointerPressed="Viewport_PointerPressed" PointerMoved="Viewport_PointerMoved" PointerReleased="Viewport_PointerReleased" PointerWheelChanged="Viewport_PointerWheelChanged" PointerExited="Viewport_PointerExited">
+                        <Canvas x:Name="WorldContainer" UseLayoutRounding="True">
+                            <Canvas.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                    <TranslateTransform X="0" Y="0"/>
+                                </TransformGroup>
+                            </Canvas.RenderTransform>
+
+                            <Canvas x:Name="ParallaxContainer" IsHitTestVisible="False" ZIndex="-1"/>
+
+                            <Path x:Name="GridOverlay" IsHitTestVisible="False" ZIndex="50" IsVisible="True" Stroke="#40FFFFFF" StrokeThickness="1"/>
+
+                            <Canvas x:Name="PreviewCursor" IsHitTestVisible="False" ZIndex="100" IsVisible="False">
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="0" Y="0"/>
+                                </Canvas.RenderTransform>
+                                <Image x:Name="PreviewGhost" Opacity="0.8" RenderOptions.BitmapInterpolationMode="None" IsHitTestVisible="False"/>
+                                <Path x:Name="PreviewBorder" StrokeThickness="2" IsHitTestVisible="False"/>
+                            </Canvas>
+                        </Canvas>
+                    </Canvas>
+                </Grid>
+            </Grid>
+
+            <Popup x:Name="BoxDropdown" Placement="Bottom" PlacementTarget="{Binding ElementName=BtnBox}" IsLightDismissEnabled="True">
+                <Border Background="#2e2640" CornerRadius="6" BorderBrush="#413659" BorderThickness="1" Padding="5" BoxShadow="{StaticResource PopupShadow}">
+                    <StackPanel>
+                        <Button Classes="ModernBtn" Tag="select" Click="SetBoxMode_Click" Margin="0,0,0,5" ToolTip.Tip="Select Only (Copy/Cut)">
+                            <Image x:Name="IconBoxSelect" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                        </Button>
+                        <Button Classes="ModernBtn" Tag="full" Click="SetBoxMode_Click" Margin="0,0,0,5" ToolTip.Tip="Full Fill">
+                            <Image x:Name="IconBoxFull" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                        </Button>
+                        <Button Classes="ModernBtn" Tag="checkered" Click="SetBoxMode_Click" Margin="0,0,0,5" ToolTip.Tip="Checkered Pattern">
+                            <Image x:Name="IconBoxCheckered" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                        </Button>
+                        <Button Classes="ModernBtn" Tag="lined" Click="SetBoxMode_Click" ToolTip.Tip="Lined Pattern">
+                            <Image x:Name="IconBoxLined" Width="20" Height="20" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+            <Popup x:Name="BrushSizeDropdown" Placement="Bottom" IsLightDismissEnabled="True">
+                <Border Background="#2e2640" CornerRadius="6" BorderBrush="#413659" BorderThickness="1" Padding="8" BoxShadow="{StaticResource PopupShadow}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="Size (1-5):" Foreground="#a78bfa" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBox x:Name="BrushSizeInput" Width="25" Background="#1d1829" Foreground="#F8FAFC" BorderBrush="#413659" BorderThickness="1" TextAlignment="Center" Padding="2" MaxLength="1" TextChanged="BrushSizeInput_TextChanged"/>
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+            <Popup x:Name="GridSizeDropdown" Placement="Bottom" IsLightDismissEnabled="True">
+                <Border Background="#2e2640" CornerRadius="6" BorderBrush="#413659" BorderThickness="1" Padding="8" BoxShadow="{StaticResource PopupShadow}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="Grid (1-4):" Foreground="#a78bfa" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBox x:Name="GridSizeInput" Width="25" Background="#1d1829" Foreground="#F8FAFC" BorderBrush="#413659" BorderThickness="1" TextAlignment="Center" Padding="2" MaxLength="1" TextChanged="GridSizeInput_TextChanged"/>
+                    </StackPanel>
+                </Border>
+            </Popup>
+            
+            <Popup x:Name="LibrarySizeDropdown" Placement="Pointer" IsLightDismissEnabled="True">
+                <Border Background="#2e2640" CornerRadius="6" BorderBrush="#413659" BorderThickness="1" Padding="8" BoxShadow="{StaticResource PopupShadow}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="Items per row (3-10):" Foreground="#a78bfa" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBox x:Name="LibrarySizeInput" Width="25" Background="#1d1829" Foreground="#F8FAFC" BorderBrush="#413659" BorderThickness="1" TextAlignment="Center" Padding="2" MaxLength="2" TextChanged="LibrarySizeInput_TextChanged"/>
+                    </StackPanel>
+                </Border>
+            </Popup>
+            
+            <Popup x:Name="ColorPickerPopup" Placement="Bottom" IsLightDismissEnabled="True">
+                <Border Background="#2e2640" CornerRadius="6" BorderBrush="#413659" BorderThickness="1" Padding="8" BoxShadow="{StaticResource PopupShadow}" Width="160">
+                    <StackPanel Spacing="2">
+                        <TextBox x:Name="CustomColorInput" Width="70" MinHeight="22" Background="#1d1829" Foreground="#F8FAFC" BorderBrush="#413659" BorderThickness="1" TextAlignment="Center" Padding="0,2,0,0" FontSize="11" Text="#130f1c" TextChanged="CustomColorInput_TextChanged" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="R" Foreground="#EF4444" VerticalAlignment="Center" Margin="0,0,6,0" FontSize="10" FontWeight="Bold"/>
+                            <Slider Grid.Row="0" Grid.Column="1" x:Name="SliderR" Minimum="0" Maximum="255" Value="19" ValueChanged="ColorSlider_ValueChanged" Foreground="#EF4444"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="G" Foreground="#10B981" VerticalAlignment="Center" Margin="0,0,6,0" FontSize="10" FontWeight="Bold"/>
+                            <Slider Grid.Row="1" Grid.Column="1" x:Name="SliderG" Minimum="0" Maximum="255" Value="15" ValueChanged="ColorSlider_ValueChanged" Foreground="#10B981"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="B" Foreground="#3B82F6" VerticalAlignment="Center" Margin="0,0,6,0" FontSize="10" FontWeight="Bold"/>
+                            <Slider Grid.Row="2" Grid.Column="1" x:Name="SliderB" Minimum="0" Maximum="255" Value="28" ValueChanged="ColorSlider_ValueChanged" Foreground="#3B82F6"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Popup>
+        </Grid>
+</Window>
