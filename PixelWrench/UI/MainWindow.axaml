@@ -1,18 +1,14 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Class="PixelWrench.MainWindow"
-        Title="PixelWrench" Height="960" Width="1280"
-        SystemDecorations="None"
-        Background="#1d1829"
-        WindowStartupLocation="CenterScreen"
-        WindowState="Maximized"
-        PointerMoved="Window_PointerMoved">
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="PixelWrench.MainWindow"
+             Background="#1d1829"
+             PointerMoved="Window_PointerMoved">
 
-    <Window.Resources>
+    <UserControl.Resources>
         <BoxShadows x:Key="PopupShadow">4 4 10 0 #80000000</BoxShadows>
-    </Window.Resources>
+    </UserControl.Resources>
 
-    <Window.Styles>
+    <UserControl.Styles>
         <Style Selector="Button.ModernBtn">
             <Setter Property="Background" Value="#2e2640"/>
             <Setter Property="Foreground" Value="#F8FAFC"/>
@@ -55,7 +51,7 @@
             <Setter Property="Background" Value="#8b5cf6"/>
             <Setter Property="Foreground" Value="#FFFFFF"/>
         </Style>
-    </Window.Styles>
+    </UserControl.Styles>
 
     <Grid RowDefinitions="35,*">
         <Grid Grid.Row="0" Background="#130f1c" PointerPressed="TitleBar_PointerPressed" Panel.ZIndex="10">
@@ -306,4 +302,4 @@
                 </Border>
             </Popup>
         </Grid>
-</Window>
+</UserControl>

@@ -45,7 +45,7 @@ namespace PixelWrench
         public void Redraw() => InvalidateVisual();
     }
 
-    public partial class MainWindow : Window
+    public partial class MainWindow : UserControl
     {
         private const int WORLD_WIDTH = 80;
         private const int WORLD_HEIGHT = 60;
@@ -651,10 +651,10 @@ namespace PixelWrench
             await ShowMessageBox(help, "PixelWrench Shortcuts");
         }
 
-        private void TitleBar_PointerPressed(object sender, PointerPressedEventArgs e) { if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) this.BeginMoveDrag(e); }
-        private void Minimize_Click(object sender, RoutedEventArgs e) => this.WindowState = WindowState.Minimized;
-        private void Maximize_Click(object sender, RoutedEventArgs e) => this.WindowState = this.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-        private void Close_Click(object sender, RoutedEventArgs e) => this.Close();
+        private void TitleBar_PointerPressed(object sender, PointerPressedEventArgs e) { }
+        private void Minimize_Click(object sender, RoutedEventArgs e) { }
+        private void Maximize_Click(object sender, RoutedEventArgs e) { }
+        private void Close_Click(object sender, RoutedEventArgs e) { }
         
         public double GetMinZoom()
         {

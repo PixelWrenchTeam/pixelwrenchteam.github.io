@@ -13,11 +13,15 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
         {
-            if (ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow();
+                desktop.MainWindow = new Avalonia.Controls.Window 
+                { 
+                    Title = "PixelWrench",
+                    Content = new MainWindow() 
+                };
             }
-            else if (ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.ISingleViewApplicationLifetime singleViewPlatform)
+            else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
             {
                 singleViewPlatform.MainView = new MainWindow();
             }
