@@ -117,10 +117,6 @@ namespace PixelWrench
 				Dispatcher.UIThread.Post(CenterCamera, DispatcherPriority.Loaded);
 			};
 
-            this.Opened += (s, e) => 
-            {
-                Dispatcher.UIThread.Post(CenterCamera, DispatcherPriority.Background);
-            };
             
             LoadIcons();
         }

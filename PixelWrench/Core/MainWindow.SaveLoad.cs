@@ -65,7 +65,8 @@ namespace PixelWrench
                 }
             }
 
-            var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+            var tl = Avalonia.Controls.TopLevel.GetTopLevel(this);
+            var file = await tl.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
             {
                 Title = "Save PixelWrench Demo World",
                 DefaultExtension = "json",
@@ -88,7 +89,8 @@ namespace PixelWrench
 
         private async void Load_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            var tlLoad = Avalonia.Controls.TopLevel.GetTopLevel(this);
+            var files = await tlLoad.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
             {
                 Title = "Load PixelWrench Demo World",
                 AllowMultiple = false,

@@ -16,9 +16,10 @@ namespace PixelWrench
 
         public MessageBoxCustom() => InitializeComponent();
 
-        public static async Task<MessageBoxResult> Show(Window parent, string text, string title, MessageBoxButtons buttons = MessageBoxButtons.Ok, bool isSelectable = false, string selectableText = null)
+        public static async Task<MessageBoxResult> Show(Avalonia.Visual parent, string text, string title, MessageBoxButtons buttons = MessageBoxButtons.Ok, bool isSelectable = false, string selectableText = null)
         {
             var msgbox = new MessageBoxCustom();
+            var parentWindow = Avalonia.Controls.TopLevel.GetTopLevel(parent) as Window;
             msgbox.TitleBlock.Text = title.ToUpper();
             
             msgbox.MessageBlock.Text = text;
@@ -48,7 +49,11 @@ namespace PixelWrench
                 AddButton(msgbox, "OK", MessageBoxResult.Ok, false);
             }
 
-            await msgbox.ShowDialog(parent);
+            if (parentWindow != null)
+                await msgbox.ShowDialog(parentWindow);
+            else 
+                return MessageBoxResult.Ok;
+            
             return msgbox.Result;
         }
 
