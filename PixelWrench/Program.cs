@@ -16,6 +16,8 @@ namespace PixelWrench
                 await BuildAvaloniaApp()
                     .WithInterFont()
                     .StartBrowserAppAsync("out");
+                
+                await Task.Delay(-1); 
             }
             catch (Exception ex)
             {

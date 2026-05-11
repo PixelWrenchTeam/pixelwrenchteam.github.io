@@ -13,19 +13,18 @@ window.onunhandledrejection = function (event) {
     }
 };
 
-const { setModuleImports, getAssemblyExports, getConfig } = await dotnet
+const runtime = await dotnet
     .withDiagnosticTracing(false)
     .withApplicationArgumentsFromQuery()
     .create();
 
-const config = getConfig();
-const exports = await getAssemblyExports(config.mainAssemblyName);
+const config = runtime.getConfig();
 
 try {
-    await dotnet.run();
+    await runtime.runMain();
 } catch (err) {
-    if (err.message.includes("already exited")) {
-        console.error("./.NET Runtime crashed. Stopping execution to prevent console flood.");
+    if (err.message && err.message.includes("already exited")) {
+        console.warn("Runtime exited gracefully or via handled crash.");
     } else {
         throw err;
     }
