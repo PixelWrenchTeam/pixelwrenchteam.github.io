@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "PixelWrench",
   "resources": {
-    "hash": "sha256-/VgnGLepNsPRwzE7Fcn+TsEHFJ5DTZ+kJ9M0T6jszlk=",
+    "hash": "sha256-WAvWKX/OBJLpcoAiS+FFsk7SDEh8vcmGpV9pbuUjzOA=",
     "fingerprinting": {
       "Avalonia.Base.69q0n1wl7u.wasm": "Avalonia.Base.wasm",
       "Avalonia.Controls.1szo8t705g.wasm": "Avalonia.Controls.wasm",
@@ -57,7 +57,7 @@
       "System.ke1disal2r.wasm": "System.wasm",
       "netstandard.kh4zrel61t.wasm": "netstandard.wasm",
       "System.Private.CoreLib.5g2rirfrqx.wasm": "System.Private.CoreLib.wasm",
-      "PixelWrench.ijf78uox5e.wasm": "PixelWrench.wasm",
+      "PixelWrench.m37p77jz5q.wasm": "PixelWrench.wasm",
       "dotnet.native.cqcqbr7wpv.js": "dotnet.native.js",
       "dotnet.native.5brmxi5zgi.wasm": "dotnet.native.wasm",
       "dotnet.js": "dotnet.js",
@@ -137,7 +137,7 @@
       "System.Threading.mhimueekk9.wasm": "sha256-Gr194oYJjXUJFzCCmhVxOmSxptewmB/rqfDy5xaNoag=",
       "System.ke1disal2r.wasm": "sha256-pJVfOQBBtR7pVRj/hsDjW2tSJr3eMSs6yVHVGbiVf2s=",
       "netstandard.kh4zrel61t.wasm": "sha256-iDu3jAIXPiTPf3ojhvv2+onYn0DbELUITIQ4TMsZ/7k=",
-      "PixelWrench.ijf78uox5e.wasm": "sha256-krWhwLs94mLehXuvGb8/uD1nXfLg+ehuJXH429jvgE0="
+      "PixelWrench.m37p77jz5q.wasm": "sha256-MsM9QZa8QXl7fwwd6C3iN8jNNfSrNpMo7Aj734kx7oY="
     }
   },
   "cacheBootResources": true,
