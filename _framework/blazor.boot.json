@@ -1,10 +1,10 @@
 {
   "mainAssemblyName": "PixelWrench",
   "resources": {
-    "hash": "sha256-WGa7O9DbRF7YtHHQXwf0zYJNBlomKkuFVWY2pjMMpb8=",
+    "hash": "sha256-/VgnGLepNsPRwzE7Fcn+TsEHFJ5DTZ+kJ9M0T6jszlk=",
     "fingerprinting": {
       "Avalonia.Base.69q0n1wl7u.wasm": "Avalonia.Base.wasm",
-      "Avalonia.Controls.q44s75vxsh.wasm": "Avalonia.Controls.wasm",
+      "Avalonia.Controls.1szo8t705g.wasm": "Avalonia.Controls.wasm",
       "Avalonia.DesignerSupport.wj72umqye4.wasm": "Avalonia.DesignerSupport.wasm",
       "Avalonia.Dialogs.hhyr6etq2x.wasm": "Avalonia.Dialogs.wasm",
       "Avalonia.Markup.Xaml.l6ssx2yiwk.wasm": "Avalonia.Markup.Xaml.wasm",
@@ -57,7 +57,7 @@
       "System.ke1disal2r.wasm": "System.wasm",
       "netstandard.kh4zrel61t.wasm": "netstandard.wasm",
       "System.Private.CoreLib.5g2rirfrqx.wasm": "System.Private.CoreLib.wasm",
-      "PixelWrench.mwn6711db3.wasm": "PixelWrench.wasm",
+      "PixelWrench.ijf78uox5e.wasm": "PixelWrench.wasm",
       "dotnet.native.cqcqbr7wpv.js": "dotnet.native.js",
       "dotnet.native.5brmxi5zgi.wasm": "dotnet.native.wasm",
       "dotnet.js": "dotnet.js",
@@ -86,7 +86,7 @@
     },
     "assembly": {
       "Avalonia.Base.69q0n1wl7u.wasm": "sha256-FiDLJpgRLJ7rdNaFwX9mSpEt3czS0EyZueLo7oMvuow=",
-      "Avalonia.Controls.q44s75vxsh.wasm": "sha256-FjF6YtePaUPPGPd6C+VQ7A3IcO+DX3T/wYdIT0UQAhA=",
+      "Avalonia.Controls.1szo8t705g.wasm": "sha256-3yg+Mk0I5ULxdVFrMacZq/Eb7QWPgQjnnwBQCjp+Fyg=",
       "Avalonia.DesignerSupport.wj72umqye4.wasm": "sha256-RFfp4HDxKrScTZ5LDquewuCJZkqyiI5cuv7m7aPsJi4=",
       "Avalonia.Dialogs.hhyr6etq2x.wasm": "sha256-VfUfdS/7AY55aRbkzlVr3zuvakMHqqw1kFdXhu9Eqvw=",
       "Avalonia.Markup.Xaml.l6ssx2yiwk.wasm": "sha256-rSbYFdLnYitEhULdBiTyyU6CpN1vJ+f7bH+pOZsKN1w=",
@@ -137,7 +137,7 @@
       "System.Threading.mhimueekk9.wasm": "sha256-Gr194oYJjXUJFzCCmhVxOmSxptewmB/rqfDy5xaNoag=",
       "System.ke1disal2r.wasm": "sha256-pJVfOQBBtR7pVRj/hsDjW2tSJr3eMSs6yVHVGbiVf2s=",
       "netstandard.kh4zrel61t.wasm": "sha256-iDu3jAIXPiTPf3ojhvv2+onYn0DbELUITIQ4TMsZ/7k=",
-      "PixelWrench.mwn6711db3.wasm": "sha256-hhlyb2lTdEwLS4WrgqQnj/T18ov56c+bzDZHw0Q7mJ0="
+      "PixelWrench.ijf78uox5e.wasm": "sha256-krWhwLs94mLehXuvGb8/uD1nXfLg+ehuJXH429jvgE0="
     }
   },
   "cacheBootResources": true,
