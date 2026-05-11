@@ -11,9 +11,18 @@ namespace PixelWrench
     {
         private static async Task Main(string[] args)
         {
-            await BuildAvaloniaApp()
-                .WithInterFont()
-                .StartBrowserAppAsync("out");
+            try
+            {
+                await BuildAvaloniaApp()
+                    .WithInterFont()
+                    .StartBrowserAppAsync("out");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[BOOT ERROR] {ex.Message}");
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
         }
 
         public static AppBuilder BuildAvaloniaApp()

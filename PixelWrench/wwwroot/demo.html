@@ -1,17 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PixelWrench Demo</title>
-    <base href="/" /> 
+    <base href="/" />
     <style>
-        body { margin: 0; background: #1a1a1a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; }
-        #out { width: 100vw; height: 100vh; }
+        body {
+            margin: 0;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: sans-serif;
+        }
+
+        #out {
+            width: 100vw;
+            height: 100vh;
+        }
     </style>
 </head>
+
 <body>
     <div id="out">Loading Engine...</div>
-    <script src="_framework/blazor.webassembly.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
+
 </html>

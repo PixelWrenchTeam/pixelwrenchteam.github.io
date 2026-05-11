@@ -167,8 +167,18 @@ namespace PixelWrench
 
         private Bitmap LoadInterfaceIcon(string name)
         {
-            string path = System.IO.Path.Combine(ASSET_PATH, "interface", "buttons", name);
-            if (System.IO.File.Exists(path)) return new Bitmap(path);
+            try
+            {
+                var uri = new Uri($"avares://PixelWrench/wwwroot/Sprites/Interface/Buttons/{name}");
+                if (Avalonia.Platform.AssetLoader.Exists(uri))
+                {
+                    using (var stream = Avalonia.Platform.AssetLoader.Open(uri))
+                    {
+                        return new Bitmap(stream);
+                    }
+                }
+            }
+            catch { }
             return null;
         }
 

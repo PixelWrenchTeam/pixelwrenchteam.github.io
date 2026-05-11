@@ -25,7 +25,6 @@ namespace PixelWrench
 
         public static void LoadAll()
         {
-            LogInfo("--- PixelWrench Asset Loader (WASM Mode) ---");
             Sprites.Clear();
 
             var mapUri = new Uri("avares://PixelWrench/wwwroot/sprites.txt");
@@ -53,51 +52,53 @@ namespace PixelWrench
 
             foreach (string line in files)
             {
-                string file = line.Replace('\\', '/');
-                string lowerFile = file.ToLower();
-                
-                if (lowerFile.Contains("/orbicons") || lowerFile.Contains("orbicons/") || lowerFile.Contains("/interface") || lowerFile.Contains("interface/")) continue;
-
-                string nameDefault = Path.GetFileNameWithoutExtension(file);
-                string lowerName = nameDefault.ToLower();
-
-                if (lowerName.Contains("anim") || lowerName.Contains("idle") || lowerName.Contains("walk") || lowerName.EndsWith("_hit") || lowerName.Contains("hit_")) continue;
-                if (lowerFile.Contains("block_animations") || lowerFile.Contains("block_switch")) continue;
-
-                if (Sprites.ContainsKey(nameDefault)) continue;
-
-                string category = "Block";
-                bool isVariant = false;
-                Bitmap displayImg = null;
-                List<Bitmap> layers = null;
-
-                var uri = new Uri($"avares://PixelWrench/wwwroot/Sprites/{file}");
-
-                if (lowerFile.Contains("/backgrounds") || lowerFile.Contains("backgrounds/")) category = "Background";
-                else if (lowerFile.Contains("/graffitis") || lowerFile.Contains("graffitis/")) { category = "Graffiti"; if (!lowerFile.Contains("full") && !lowerName.Contains("full")) isVariant = true; }
-                else if (lowerFile.Contains("/fossils") || lowerFile.Contains("fossils/")) { category = "Fossil"; if (!lowerFile.Contains("full") && !lowerName.Contains("full")) isVariant = true; }
-                else if (lowerFile.Contains("/props") || lowerFile.Contains("props/")) category = "Prop";
-                else if (lowerFile.Contains("/worldbackgrounds") || lowerFile.Contains("worldbackgrounds/")) 
+                try
                 {
-                    category = "WorldBackground";
-                    layers = new List<Bitmap> { new Bitmap(Avalonia.Platform.AssetLoader.Open(uri)) }; 
-                    string orbKey = nameDefault + " Orb";
-                    if (nameDefault.Equals("Cemetery", StringComparison.OrdinalIgnoreCase)) orbKey = "Cemetary Orb"; 
+                    string file = line.Replace('\\', '/');
+                    string lowerFile = file.ToLower();
                     
-                    if (orbIcons.ContainsKey(orbKey)) displayImg = orbIcons[orbKey];
-                    else displayImg = layers[0]; 
-                }
-                else if (lowerName.Contains("water") || lowerName.Contains("lava") || lowerName.Contains("oil") || lowerName.Contains("naphtha") || lowerName.Contains("jelly")) 
-                {
-                    category = "Liquid"; 
-                }
+                    if (lowerFile.Contains("/orbicons") || lowerFile.Contains("orbicons/") || lowerFile.Contains("/interface") || lowerFile.Contains("interface/")) continue;
 
-                Sprites[nameDefault] = new ItemData { 
-                    Image = displayImg ?? new Bitmap(Avalonia.Platform.AssetLoader.Open(uri)), 
-                    Category = category,
-                    IsVariant = isVariant,
-                    Layers = layers
-                };
+                    string nameDefault = Path.GetFileNameWithoutExtension(file);
+                    if (Sprites.ContainsKey(nameDefault)) continue;
+
+                    string category = "Block";
+                    bool isVariant = false;
+                    Bitmap displayImg = null;
+                    List<Bitmap> layers = null;
+
+                    var uri = new Uri($"avares://PixelWrench/wwwroot/Sprites/{file}");
+
+                    if (lowerFile.Contains("/backgrounds") || lowerFile.Contains("backgrounds/")) category = "Background";
+                    else if (lowerFile.Contains("/graffitis") || lowerFile.Contains("graffitis/")) { category = "Graffiti"; if (!lowerFile.Contains("full")) isVariant = true; }
+                    else if (lowerFile.Contains("/fossils") || lowerFile.Contains("fossils/")) { category = "Fossil"; if (!lowerFile.Contains("full")) isVariant = true; }
+                    else if (lowerFile.Contains("/props") || lowerFile.Contains("props/")) category = "Prop";
+                    else if (lowerFile.Contains("/worldbackgrounds") || lowerFile.Contains("worldbackgrounds/")) 
+                    {
+                        category = "WorldBackground";
+                        layers = new List<Bitmap> { new Bitmap(Avalonia.Platform.AssetLoader.Open(uri)) }; 
+                        string orbKey = nameDefault + " Orb";
+                        if (nameDefault.Equals("Cemetery", StringComparison.OrdinalIgnoreCase)) orbKey = "Cemetary Orb"; 
+                        
+                        if (orbIcons.ContainsKey(orbKey)) displayImg = orbIcons[orbKey];
+                        else displayImg = layers[0]; 
+                    }
+                    else if (lowerFile.Contains("water") || lowerFile.Contains("lava") || lowerFile.Contains("oil") || lowerFile.Contains("naphtha") || lowerFile.Contains("jelly")) 
+                    {
+                        category = "Liquid"; 
+                    }
+
+                    Sprites[nameDefault] = new ItemData { 
+                        Image = displayImg ?? new Bitmap(Avalonia.Platform.AssetLoader.Open(uri)), 
+                        Category = category,
+                        IsVariant = isVariant,
+                        Layers = layers
+                    };
+                }
+                catch (Exception ex)
+                {
+                    LogInfo($"ERROR: Failed to load sprite '{line}': {ex.Message}");
+                }
             }
 
             if (orbIcons.ContainsKey("Custom Orb")) {

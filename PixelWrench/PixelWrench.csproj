@@ -1,22 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
   <PropertyGroup>
-    <TargetFramework>net8.0-browser</TargetFramework>
+    <TargetFramework>net9.0-browser</TargetFramework>
     <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <WasmMainJSPath>wwwroot/main.js</WasmMainJSPath>
   </PropertyGroup>
 
   <Target Name="GenerateSpriteMap" BeforeTargets="PreBuildEvent">
     <ItemGroup>
-      <SpriteFiles Include="wwwroot\Sprites\**\*.png" />
+      <SpriteFiles Include="wwwroot/Sprites/**/*.png" />
     </ItemGroup>
-    <WriteLinesToFile File="wwwroot\sprites.txt" Lines="@(SpriteFiles->'%(RecursiveDir)%(Filename)%(Extension)')" Overwrite="true" />
+    <WriteLinesToFile File="wwwroot/sprites.txt" Lines="@(SpriteFiles->'%(RecursiveDir)%(Filename)%(Extension)')" Overwrite="true" />
+  </Target>
+
+  <Target Name="CopyAvaloniaJS" AfterTargets="Build;Publish">
+    <Copy SourceFiles="$(OutputPath)wwwroot/avalonia.js" DestinationFolder="$(OutputPath)wwwroot/_framework" SkipUnchangedFiles="true" Condition="Exists('$(OutputPath)wwwroot/avalonia.js')" />
+    <Copy SourceFiles="$(OutputPath)wwwroot/storage.js" DestinationFolder="$(OutputPath)wwwroot/_framework" SkipUnchangedFiles="true" Condition="Exists('$(OutputPath)wwwroot/storage.js')" />
+    <Copy SourceFiles="$(PublishDir)wwwroot/avalonia.js" DestinationFolder="$(PublishDir)wwwroot/_framework" SkipUnchangedFiles="true" Condition="Exists('$(PublishDir)wwwroot/avalonia.js') And '$(PublishDir)' != ''" />
+    <Copy SourceFiles="$(PublishDir)wwwroot/storage.js" DestinationFolder="$(PublishDir)wwwroot/_framework" SkipUnchangedFiles="true" Condition="Exists('$(PublishDir)wwwroot/storage.js') And '$(PublishDir)' != ''" />
   </Target>
 
   <ItemGroup>
-    <AvaloniaResource Include="wwwroot\**\*.*" />
+    <AvaloniaResource Include="wwwroot/**/*.*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +33,7 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.3" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.3" />
     <PackageReference Include="Avalonia.Diagnostics" Version="11.1.3" />
+    <PackageReference Include="SkiaSharp.NativeAssets.WebAssembly" Version="2.88.8" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,43 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install Wasm-tools
+        run: dotnet workload install wasm-tools
+
+      - name: Publish
+        run: |
+          dotnet clean PixelWrench/PixelWrench.csproj
+          dotnet publish PixelWrench/PixelWrench.csproj -c Release -o release
+
+      - name: Fix paths and add .nojekyll
+        run: |
+          # Copy JS files to _framework if they exist in root (fallback for runtime expectation)
+          [ -f release/wwwroot/avalonia.js ] && cp release/wwwroot/avalonia.js release/wwwroot/_framework/
+          [ -f release/wwwroot/storage.js ] && cp release/wwwroot/storage.js release/wwwroot/_framework/
+          touch release/wwwroot/.nojekyll
+          # Copy index.html to 404.html for SPA support if needed
+          cp release/wwwroot/index.html release/wwwroot/404.html
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: release/wwwroot
+          branch: gh-pages
