@@ -43,10 +43,17 @@ namespace PixelWrench
             Dictionary<string, Bitmap> orbIcons = new Dictionary<string, Bitmap>(StringComparer.OrdinalIgnoreCase);
 
             foreach (string line in files) {
-                string file = line.Replace('\\', '/');
-                if (file.ToLower().Contains("/orbicons") || file.ToLower().Contains("orbicons/")) {
-                    string name = Path.GetFileNameWithoutExtension(file);
-                    orbIcons[name] = new Bitmap(Avalonia.Platform.AssetLoader.Open(new Uri($"avares://PixelWrench/wwwroot/Sprites/{file}")));
+                try {
+                    string file = line.Replace('\\', '/');
+                    if (file.ToLower().Contains("/orbicons") || file.ToLower().Contains("orbicons/")) {
+                        string name = Path.GetFileNameWithoutExtension(file);
+                        var orbUri = new Uri($"avares://PixelWrench/wwwroot/Sprites/{file.Replace(" ", "%20")}");
+                        using (var stream = Avalonia.Platform.AssetLoader.Open(orbUri)) {
+                            orbIcons[name] = new Bitmap(stream);
+                        }
+                    }
+                } catch (Exception ex) {
+                    LogInfo($"WARNING: Failed to load orb icon '{line}': {ex.Message}");
                 }
             }
 
@@ -67,7 +74,7 @@ namespace PixelWrench
                     Bitmap displayImg = null;
                     List<Bitmap> layers = null;
 
-                    var uri = new Uri($"avares://PixelWrench/wwwroot/Sprites/{file}");
+                    var uri = new Uri($"avares://PixelWrench/wwwroot/Sprites/{file.Replace(" ", "%20")}");
 
                     if (lowerFile.Contains("/backgrounds") || lowerFile.Contains("backgrounds/")) category = "Background";
                     else if (lowerFile.Contains("/graffitis") || lowerFile.Contains("graffitis/")) { category = "Graffiti"; if (!lowerFile.Contains("full")) isVariant = true; }
